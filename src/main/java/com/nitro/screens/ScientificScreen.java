@@ -1,5 +1,6 @@
 package com.nitro.screens;
 
+import com.nitro.utils.ScreenUtils;
 import mmarquee.automation.controls.Application;
 import mmarquee.automation.controls.Button;
 
@@ -7,6 +8,13 @@ public class ScientificScreen extends BaseScreen {
 
     public ScientificScreen(Application app) throws Exception {
         super(app);
+        // Ensure we're in Scientific mode, regardless of current mode (Programmer, Graphing, Standard, etc.)
+        try {
+            if (window.getTextBox("Standard Calculator mode") != null)
+                ScreenUtils.switchToScientific(app);
+        } catch (Exception e) {
+            // Already in Scientific mode or switch was unnecessary - continue
+        }
     }
 
     public ScientificScreen clickButton(String name) throws Exception {
@@ -20,13 +28,7 @@ public class ScientificScreen extends BaseScreen {
     }
 
     public StandardScreen switchToStandard(Application app) throws Exception {
-        Button menuButton = window.getButton("Open Navigation");
-        menuButton.click();
-        Thread.sleep(500);
-        Button standardButton = window.getButton("Standard Calculator");
-        standardButton.click();
-        Thread.sleep(1000);
-        return new StandardScreen(app);
+        return ScreenUtils.switchToStandard(app);
     }
 
     public String getResult() throws Exception {

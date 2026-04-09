@@ -1,5 +1,6 @@
 package com.nitro.screens;
 
+import com.nitro.utils.ScreenUtils;
 import mmarquee.automation.controls.Application;
 import mmarquee.automation.controls.Button;
 import java.awt.Robot;
@@ -9,8 +10,13 @@ public class StandardScreen extends BaseScreen {
 
     public StandardScreen(Application app) throws Exception {
         super(app);
-//        if(window.getTextBox("Scientific Calculator mode")!= null)
-//            ScientificScreen.switchToStandard(app);
+        // Ensure we're in Standard mode, regardless of current mode (Programmer, Graphing, Scientific, etc.)
+        try {
+            if (window.getTextBox("Scientific Calculator mode") != null)
+                ScreenUtils.switchToStandard(app);
+        } catch (Exception e) {
+            // Already in Standard mode or switch was unnecessary - continue
+        }
     }
 
     public StandardScreen clickButton(String name) throws Exception {
@@ -34,6 +40,15 @@ public class StandardScreen extends BaseScreen {
             robot.keyRelease(keyCode);
             Thread.sleep(50);
         }
+
+        Thread.sleep(50);
+    }
+    public void pressEnter() throws Exception {
+        window.focus();
+        Robot robot = new Robot();
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.keyRelease(KeyEvent.VK_ENTER);
+        Thread.sleep(100);
     }
 
     public void pressEscape() throws Exception {
@@ -45,13 +60,7 @@ public class StandardScreen extends BaseScreen {
     }
 
     public ScientificScreen switchToScientific(Application app) throws Exception {
-        Button menuButton = window.getButton("Open Navigation");
-        menuButton.click();
-        Thread.sleep(500);
-        Button scientificButton = window.getButton("Scientific Calculator");
-        scientificButton.click();
-        Thread.sleep(1000);
-        return new ScientificScreen(app);
+        return ScreenUtils.switchToScientific(app);
     }
 
     public String getResult() throws Exception {

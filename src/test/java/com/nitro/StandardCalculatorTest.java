@@ -112,7 +112,7 @@ public class StandardCalculatorTest extends BaseTest {
 
 
     @Test
-    @DisplayName("TC09: It should show 'Cannot divide by zero' error when for the expression 5 ÷ 0")
+    @DisplayName("TC09: It should show 'Cannot divide by zero' error when input the expression 5 ÷ 0")
     public void testDivisionByZero() throws Exception {
         screen.clickButton("Five")
                 .clickButton("Divide by")
@@ -136,26 +136,11 @@ public class StandardCalculatorTest extends BaseTest {
         assertEquals("0", screen.getResult(), "After Clear, display should show 0");
     }
 
-//    @Test
-//    @DisplayName("TC11: It should handle overflow when for the expression 999999 × 999999")
-//    public void testOverflowCapacity() throws Exception {
-//        screen.clickButton("Nine").clickButton("Nine").clickButton("Nine")
-//                .clickButton("Nine").clickButton("Nine").clickButton("Nine")
-//                .clickButton("Multiply by")
-//                .clickButton("Nine").clickButton("Nine").clickButton("Nine")
-//                .clickButton("Nine").clickButton("Nine").clickButton("Nine")
-//                .clickButton("Equals");
-//
-//        String result = screen.getResult();
-//        // The calculator might show an error, overflow indicator, or the max value it can display
-//        assertTrue(result != null && !result.isEmpty(),
-//                "Calculator should display a result or error message when exceeding capacity, but result was: " + result);
-//    }
-
     @Test
     @DisplayName("TC12: It should display 8 when for keyboard input '5+3='")
     public void testKeyboardInput() throws Exception {
-        screen.typeKeys("5+3=");
+        screen.typeKeys("5+3");
+        screen.pressEnter();
 
         assertEquals("8", screen.getResult(), "Keyboard input '5+3=' should result in 8");
     }
