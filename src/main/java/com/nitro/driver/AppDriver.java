@@ -1,6 +1,5 @@
 package com.nitro.driver;
 
-import mmarquee.automation.AutomationException;
 import mmarquee.automation.UIAutomation;
 import mmarquee.automation.controls.Application;
 
