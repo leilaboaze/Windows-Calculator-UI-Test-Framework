@@ -52,20 +52,7 @@ public class ScreenUtils {
     }
 
     private static void clickListItem(Window window, String itemName) throws AutomationException {
-        window.getControlByControlType("itemName", ControlType.ListItem);
-        for (var child : window.getChildren(true)) {
-            try {
-                String name = child.getName();
-                if (name != null && name.contains(itemName)) {
-                    Button bt = new Button(
-                            new ElementBuilder(child.getAutomation()));
-                    bt.click();
-                    break;  // Now valid - break in traditional for loop
-                }
-            } catch (Exception e) {
-                // Ignore exceptions while searching for the button
-            }
-        }
+        window.get(ListItem.class, ControlType.ListItem, itemName).select();
     }
 
 }

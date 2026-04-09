@@ -5,7 +5,6 @@ import com.nitro.screens.StandardScreen;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestMethodOrder(MethodOrderer.DisplayName.class)
 public class ScientificCalculatorTest extends BaseTest {
 
     private ScientificScreen screen;
@@ -15,7 +14,7 @@ public class ScientificCalculatorTest extends BaseTest {
         screen.clear();
     }
     @Test
-    @DisplayName("TC13: It should correctly switch between operations in Scientific, Standard and back to Scientific modes")
+    @DisplayName("TC14: It should correctly switch between operations in Scientific, Standard and back to Scientific modes")
     public void testModeSwitching() throws Exception {
 
         // Operation in Scientific mode
@@ -25,8 +24,7 @@ public class ScientificCalculatorTest extends BaseTest {
         // Switch to Standard
         StandardScreen standard = screen.switchToStandard(app);
         assertNotNull(standard, "Should be able to open Standard mode");
-        //assertEquals("", screen.getResult(), "Should clear display output after switching modes");
-        //standard.clear();
+        assertEquals("0", screen.getResult(), "Should clear display output after switching modes");
 
         // Perform operation in Standard mode
         standard.clickButton("Five").clickButton("Plus").clickButton("Three").clickButton("Equals");
@@ -35,7 +33,7 @@ public class ScientificCalculatorTest extends BaseTest {
         // Switch back to Scientific
         ScientificScreen backToScientific = standard.switchToScientific(app);
         assertNotNull(backToScientific, "Should be able to return to Scientific mode");
-        //assertEquals("", screen.getResult(), "Should clear display output after switching modes");
+        assertEquals("0", screen.getResult(), "Should clear display output after switching modes");
 
         // Verify that we're back in Scientific mode with a clean state
         String result = backToScientific.getResult();

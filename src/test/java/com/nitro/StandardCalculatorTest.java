@@ -4,7 +4,6 @@ import com.nitro.screens.StandardScreen;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestMethodOrder(MethodOrderer.DisplayName.class)
 public class StandardCalculatorTest extends BaseTest {
 
     private StandardScreen screen;
