@@ -15,20 +15,18 @@ public class StandardScreen extends BaseScreen {
         return this;
     }
 
-
     public StandardScreen clear() throws Exception {
         return clickButton("Clear");
     }
 
     public String getResult() throws Exception {
-        var display = window.getTextBox("CalculatorResults");
-        if (display == null) {
-            throw new Exception("Calculator display not found");
+        var children = window.getChildren(true);
+        for (var child : children) {
+            String name = child.getName();
+            if (name != null && name.startsWith("Display is ")) {
+                return name.replace("Display is ", "").trim();
+            }
         }
-        try {
-            return display.getValue();
-        } catch (NoSuchMethodError | Exception e1) {
-            return display.getName();
-        }
+        throw new Exception("Calculator display not found");
     }
 }

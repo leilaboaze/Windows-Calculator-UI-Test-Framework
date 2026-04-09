@@ -1,6 +1,5 @@
 package com.nitro;
 
-import com.nitro.BaseTest;
 import com.nitro.screens.StandardScreen;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

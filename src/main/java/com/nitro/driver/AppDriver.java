@@ -1,8 +1,8 @@
 package com.nitro.driver;
 
+import mmarquee.automation.AutomationException;
 import mmarquee.automation.UIAutomation;
 import mmarquee.automation.controls.Application;
-import mmarquee.automation.controls.ElementBuilder;
 
 public class AppDriver {
 
@@ -18,7 +18,7 @@ public class AppDriver {
 
     public static void close() {
         if (application != null) {
-            application.quit("CLOSING CALC");
+            application.close("Calculator");
         }
     }
 }
