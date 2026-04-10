@@ -8,57 +8,39 @@ on:
 
 jobs:
   ui-tests:
-    runs-on: macos-latest
+    runs-on: windows-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Vagrant and VirtualBox
-        run: |
-          brew install --cask virtualbox
-          brew install --cask vagrant
-
-      - name: Verify installations
-        run: |
-          vagrant --version
-          vboxmanage --version
-
-      - name: Cache Vagrant box
-        uses: actions/cache@v4
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
         with:
-          path: ~/.vagrant.d/boxes
-          key: ${{ runner.os }}-vagrant-${{ hashFiles('Vagrantfile') }}
-          restore-keys: |
-            ${{ runner.os }}-vagrant-
+          java-version: '21'
+          distribution: 'microsoft'
 
-      - name: Start Windows VM
-        run: vagrant up
-        timeout-minutes: 40
-
-      - name: Run tests inside VM
+      - name: Verify Calculator is installed
         run: |
-          vagrant ssh -c "
-            cd /vagrant &&
-            export PATH=\$PATH:/c/Program\ Files/Maven/apache-maven-3.9.9/bin &&
-            mvn clean test --batch-mode
-          "
-        timeout-minutes: 20
+          Get-AppxPackage -Name Microsoft.WindowsCalculator
+        shell: pwsh
 
-      - name: Copy test results from VM
-        if: always()
-        run: |
-          mkdir -p test-results
-          vagrant scp :/vagrant/target/surefire-reports/*.xml ./test-results/ || true
+      - name: Run UI tests
+        run: mvn clean test --batch-mode
+        shell: pwsh
 
       - name: Publish test results
         if: always()
         uses: mikepenz/action-junit-report@v4
         with:
-          report_paths: 'test-results/*.xml'
+          report_paths: 'target/surefire-reports/*.xml'
           check_name: 'Calculator UI Test Results'
           fail_on_failure: true
 
-      - name: Destroy VM
-        if: always()
-        run: vagrant destroy -f
+      - name: Upload test artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-failure-screenshots
+          path: target/screenshots/
+          retention-days: 7
