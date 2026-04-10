@@ -136,7 +136,7 @@ public class StandardCalculatorTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC12: It should display 8 when for keyboard input '5+3='")
+    @DisplayName("TC11: It should display 8 when for keyboard input '5+3='")
     public void testKeyboardInput() throws Exception {
         screen.typeKeys("5+3");
         screen.pressEnter();
@@ -145,7 +145,7 @@ public class StandardCalculatorTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC13: It should display 0 when Escape key is pressed after entering 99")
+    @DisplayName("TC12: It should display 0 when Escape key is pressed after entering 99")
     public void testEscapeKeyClearsDisplay() throws Exception {
         screen.typeKeys("99");
         screen.pressEscape();

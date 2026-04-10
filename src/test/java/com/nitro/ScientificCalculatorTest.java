@@ -14,7 +14,7 @@ public class ScientificCalculatorTest extends BaseTest {
         screen.clear();
     }
     @Test
-    @DisplayName("TC14: It should correctly switch between operations in Scientific, Standard and back to Scientific modes")
+    @DisplayName("TC13: It should correctly switch between operations in Scientific, Standard and back to Scientific modes")
     public void testModeSwitching() throws Exception {
 
         // Operation in Scientific mode
@@ -41,7 +41,7 @@ public class ScientificCalculatorTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC15: It should return 2 when for the expression √4")
+    @DisplayName("TC14: It should return 2 when for the expression √4")
     public void testSquareRoot() throws Exception {
 
         screen.clickButton("Four")

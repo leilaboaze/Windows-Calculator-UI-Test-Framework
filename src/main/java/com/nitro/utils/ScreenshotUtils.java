@@ -8,7 +8,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class ScreenshotUtil {
+public class ScreenshotUtils {
 
     public static byte[] captureWindow(Window window) throws Exception {
 

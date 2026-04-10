@@ -1,6 +1,6 @@
 package com.nitro.ai;
 
-import com.nitro.utils.ScreenshotUtil;
+import com.nitro.utils.ScreenshotUtils;
 import mmarquee.automation.controls.Application;
 import mmarquee.automation.controls.Window;
 
@@ -42,7 +42,7 @@ public class FailureAnalyzer {
     public String analyze(String testName, String description,
                           Throwable error, Window window, Application application) {
         try {
-            byte[] screenshot = ScreenshotUtil.captureWindow(window);
+            byte[] screenshot = ScreenshotUtils.captureWindow(window);
 
             String userMessage = String.format("""
                 Test name: %s
