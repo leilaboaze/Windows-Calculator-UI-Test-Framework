@@ -1,0 +1,57 @@
+name: Calculator UI Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  ui-tests:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Cache Vagrant box
+        uses: actions/cache@v4
+        with:
+          path: ~/.vagrant.d/boxes
+          key: ${{ runner.os }}-vagrant-${{ hashFiles('Vagrantfile') }}
+          restore-keys: |
+            ${{ runner.os }}-vagrant-
+
+      - name: Show Vagrant version
+        run: vagrant --version
+
+      - name: Start Windows VM
+        run: vagrant up
+        timeout-minutes: 30
+
+      - name: Run tests inside VM
+        run: |
+          vagrant ssh -c "
+            cd /vagrant &&
+            export PATH=\$PATH:/c/Program\ Files/Maven/apache-maven-3.9.9/bin &&
+            mvn clean test --batch-mode
+          "
+        timeout-minutes: 20
+
+      - name: Copy test results from VM
+        if: always()
+        run: |
+          mkdir -p test-results
+          vagrant scp :'/vagrant/target/surefire-reports/*.xml' ./test-results/ || true
+
+      - name: Publish test results
+        if: always()
+        uses: mikepenz/action-junit-report@v4
+        with:
+          report_paths: 'test-results/*.xml'
+          check_name: 'Calculator UI Test Results'
+          fail_on_failure: true
+
+      - name: Destroy VM
+        if: always()
+        run: vagrant destroy -f
