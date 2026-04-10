@@ -42,8 +42,8 @@ Within the VM, the development environment was set up as follows:
 
 ```bash
 # Clone the repository
-git clone https://github.com/leilaboaze/Nitro-Assessment.git
-cd nitro-assessment
+git clone https://github.com/leilaboaze/Windows-Calculator-UI-Test-Framework.git
+cd Windows-Calculator-UI-Test-Framework
 
 # Build the project
 mvn clean compile
