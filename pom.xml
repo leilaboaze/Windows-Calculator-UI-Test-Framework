@@ -14,15 +14,20 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-
-<!--    <repositories>-->
-<!--        <repository>-->
-<!--            <id>jitpack.io</id>-->
-<!--            <url>https://jitpack.io</url>-->
-<!--        </repository>-->
-<!--    </repositories>-->
-
     <dependencies>
+
+        <!-- Anthropic -->
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.12.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
+        </dependency>
         <!-- UI Automation -->
         <dependency>
             <groupId>com.github.mmarquee</groupId>
@@ -30,7 +35,7 @@
             <version>0.7.0</version>
         </dependency>
 
-        <!-- Forçar JNA com suporte ARM64 -->
+        <!-- Force JNA that supports ARM64 -->
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>

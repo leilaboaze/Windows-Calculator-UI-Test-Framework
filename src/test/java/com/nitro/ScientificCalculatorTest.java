@@ -47,7 +47,12 @@ public class ScientificCalculatorTest extends BaseTest {
         screen.clickButton("Four")
                 .clickButton("Square root");
 
-        assertEquals("2", screen.getResult(), "√4 should be 2");
+        try {
+            assertEquals("3", screen.getResult(), "√4 should be 2");
+        } catch (AssertionError e) {
+            analyzeFailure("TC15: It should return 2 when for the expression √4", "√4 should be 2", e, screen);
+            throw e;
+        }
     }
 
 
