@@ -13,4 +13,12 @@ public abstract class BaseScreen {
         this.automation = UIAutomation.getInstance();
         this.window = app.getWindow("Calculator");
     }
+
+    public Window getWindow() {
+        return window;
+    }
+
+    public UIAutomation getAutomation() {
+        return automation;
+    }
 }

@@ -28,6 +28,9 @@ jobs:
       - name: Run UI tests
         run: mvn clean test --batch-mode
         shell: pwsh
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          JAVA_TOOL_OPTIONS: "-Djava.awt.headless=false"
 
       - name: Publish test results
         if: always()
