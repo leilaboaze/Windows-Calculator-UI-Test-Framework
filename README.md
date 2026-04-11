@@ -14,7 +14,7 @@
 - [AI Integration](#ai-integration)
 - [AI Usage Transparency](#ai-usage-transparency)
 - [Improvements](#improvements)
-
+- [Scaling](#scaling)
 ---
 
 ## Development Environment
@@ -414,3 +414,21 @@ Given more time, the following improvements would be prioritised:
 - Add tests for the Failure Analysis feature, ensuring that screenshots are captured and sent to the model correctly, and that the model response quality is sufficient to guide debugging;
 - Add tests for the natural language test generator that verify it can handle a wider variety of input phrasings and more complex expressions, and that it handles errors correctly when given invalid input.
 - The arithmetic tests currently repeat the same structure with different values, so replacing them with `@ParameterizedTest` tests driven by a CSV or method source would reduce code duplication and make it trivial to add new cases.
+
+---
+
+## Scaling
+
+To evolve this framework from a small Calculator suite to a large desktop product with many screens and hundreds of test cases, the following changes would be applied progressively.
+
+**Screen Object registry.** A `ScreenFactory` that resolves the correct Screen Object based on current application state decouples tests from navigation logic. Adding a new screen becomes a matter of registering it, without touching existing tests.
+
+**Parallel execution.** JUnit 5 supports parallel test execution natively. A CI matrix strategy splitting test classes across multiple `windows-latest` runners and merging JUnit XML reports, achieves parallelism without bespoke infrastructure.
+
+**Tag-based test selection.** `@Tag("smoke")`, `@Tag("regression")`, `@Tag("scientific")` allow the pipeline to run a fast smoke suite on every commit and a full regression suite nightly, without maintaining separate class hierarchies.
+
+**Centralised element registry.** Strings like `"Five"` and `"Display is"` scattered across Screen Objects become a maintenance burden as the application evolves. An `ElementRegistry` mapping logical names to Automation IDs in one place makes UI changes a one-line fix.
+
+**External test data.** For a large suite, inputs and expected outputs belong in external files rather than in code. This separates logic from data and allows non-engineers to contribute cases.
+
+**Observability and test management.** Integrate with Allure or ReportPortal for trend analysis and flakiness tracking; integrate with Zephyr Scale or XRay for bidirectional traceability to Jira requirements and automatic test execution reporting.
